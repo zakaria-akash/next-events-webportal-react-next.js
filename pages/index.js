@@ -1,10 +1,14 @@
 import React from "react";
 
+import { getFeaturedEvents } from "../dummy-data";
+import EventList from "../components/events/event-list";
+
 const HomePage = () => {
+  const featuredEvents = getFeaturedEvents();
   return (
     <div>
       <center>
-        <h1>Home Page</h1>
+        <EventList items={featuredEvents} />
       </center>
     </div>
   );
