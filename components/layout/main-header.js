@@ -7,7 +7,7 @@ const MainHeader = (props) => {
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
-        <Link href="/">Next Event</Link>
+        <Link href="/">Next Events Portal</Link>
       </div>
       <nav className={classes.navigation}>
         <ul>
