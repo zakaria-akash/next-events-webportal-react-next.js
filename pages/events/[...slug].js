@@ -18,8 +18,19 @@ const FilteredEventsPage = () => {
     "https://next-events-portal-default-rtdb.firebaseio.com/events.json",
     (url) => fetch(url).then((res) => res.json()) //fetcher function for SWR hook
   );
+  let headTagForThisComponent = (
+    <Head>
+      <title>Next Events || Filtered Events</title>
+      <meta name="description" content="Next Events || Filtered Events Page" />
+    </Head>
+  );
   if (error) {
-    return <h3 className="center">Failed to load...</h3>;
+    return (
+      <div>
+        {headTagForThisComponent}
+        <h3 className="center">Failed to load...</h3>
+      </div>
+    );
   }
   useEffect(() => {
     if (data) {
@@ -38,7 +49,12 @@ const FilteredEventsPage = () => {
   }, [data]);
 
   if (!loadedEvents) {
-    return <h3 className="center">Loading...</h3>;
+    return (
+      <div>
+        {headTagForThisComponent}
+        <h3 className="center">Loading...</h3>
+      </div>
+    );
   }
 
   const filteredYear = filteredData[0];
@@ -46,6 +62,16 @@ const FilteredEventsPage = () => {
 
   const numYear = +filteredYear;
   const numMonth = +filteredMonth;
+
+  headTagForThisComponent = (
+    <Head>
+      <title>Next Events || Filtered Events</title>
+      <meta
+        name="description"
+        content={`All filtered events for ${numMonth}/${numYear}`}
+      />
+    </Head>
+  );
 
   if (
     isNaN(numYear) ||
@@ -58,6 +84,7 @@ const FilteredEventsPage = () => {
   ) {
     return (
       <ErrorAlert>
+        {headTagForThisComponent}
         <div className="center">
           <h4>Invalid URL to show any specific event!!!</h4>
           <Button link="/events">Show All Events</Button>
@@ -77,6 +104,7 @@ const FilteredEventsPage = () => {
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <ErrorAlert>
+        {headTagForThisComponent}
         <div className="center">
           <h4>No event found for the chosen date</h4>
           <Button link="/events">Show All Events</Button>
@@ -88,13 +116,7 @@ const FilteredEventsPage = () => {
   const date = new Date(numYear, numMonth - 1);
   return (
     <Fragment>
-      <Head>
-        <title>Next Events || Filtered Events</title>
-        <meta
-          name="description"
-          content={`All filtered events for ${numMonth}/${numYear}`}
-        />
-      </Head>
+      {headTagForThisComponent}
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </Fragment>
