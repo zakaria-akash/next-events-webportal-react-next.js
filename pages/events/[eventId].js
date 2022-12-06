@@ -1,6 +1,9 @@
 import React, { Fragment } from "react";
 
-import { getEventById, getAllEvents } from "../../backend-helpers/api-utils";
+import {
+  getEventById,
+  getFeaturedEvents,
+} from "../../backend-helpers/api-utils";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
@@ -49,11 +52,12 @@ export const getStaticProps = async (context) => {
     props: {
       selectedEvent: event,
     },
+    revalidate: 3600,
   };
 };
 
 export const getStaticPaths = async () => {
-  const events = await getAllEvents();
+  const events = await getFeaturedEvents();
 
   const paths = events.map((event) => ({
     params: {
@@ -63,7 +67,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths: paths,
-    fallback: false,
+    fallback: "blocking",
   };
 };
 
