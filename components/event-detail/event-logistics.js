@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/dist/client/image";
 
 import AddressIcon from "../icons/address-icon";
 import DateIcon from "../icons/date-icon";

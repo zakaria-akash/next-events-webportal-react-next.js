@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/dist/client/image";
 
 import classes from "./event-item.module.css";
 import Button from "../ui/button";
