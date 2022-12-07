@@ -19,7 +19,12 @@ const EventItem = (props) => {
   const exploreEventsLink = `/events/${id}`;
   return (
     <li className={classes.item}>
-      <Image src={"/" + image} alt="event-image" width="auto" height="auto" />
+      <Image
+        src={__dirname + image}
+        alt="event-image"
+        width="auto"
+        height="auto"
+      />
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2>{title}</h2>
