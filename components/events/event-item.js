@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/dist/client/image";
 
 import classes from "./event-item.module.css";
 import Button from "../ui/button";
@@ -19,7 +18,7 @@ const EventItem = (props) => {
   const exploreEventsLink = `/events/${id}`;
   return (
     <li className={classes.item}>
-      <Image src={`/${image}`} alt="event-image" width="auto" height="auto" />
+      <img src={`/${image}`} alt="event-image" width="auto" height="auto" />
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2>{title}</h2>
