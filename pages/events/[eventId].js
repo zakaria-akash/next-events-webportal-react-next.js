@@ -30,10 +30,10 @@ const EventDetailPage = (props) => {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={event.id} />
       <div className="center">
         <Button link="/events">Show All Events</Button>
       </div>
-      <Comments eventId={event.id} />
     </Fragment>
   );
 };
