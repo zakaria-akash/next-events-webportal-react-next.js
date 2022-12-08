@@ -1,7 +1,14 @@
 import React from "react";
 
-const eventIdApi = (req, res) => {
+import { MongoClient } from "mongodb";
+
+const eventIdApi = async (req, res) => {
   const eventId = req.query.eventId;
+
+  const client = await MongoClient.connect(
+    `mongodb+srv://${process.env.USERNAME_PASSWORD}@starting-cluster-01.5mukk.mongodb.net/next-events?retryWrites=true&w=majority`
+  );
+  const db = client.db();
 
   if (req.method === "POST") {
     const { email, name, text } = req.body;
@@ -21,11 +28,16 @@ const eventIdApi = (req, res) => {
     }
 
     const newComment = {
-      id: new Date().toISOString(),
       email,
       name,
       text,
+      eventId,
     };
+
+
+    const result = await db.collection("comments").insertOne(newComment);
+    console.log(result);
+    newComment.id = result.insertedId;
 
     res.status(201).json({
       message: "Comment submitted successfully..",
@@ -33,23 +45,18 @@ const eventIdApi = (req, res) => {
     });
   }
   if (req.method === "GET") {
-    const sampleComments = [
-      {
-        id: "c1",
-        name: "Zakaria",
-        text: "First sample comment for testing!",
-      },
-      {
-        id: "c2",
-        name: "Ibrahim",
-        text: "Second sample comment for testing!",
-      },
-    ];
+
+    const documents = await db
+      .collection("comments")
+      .find()
+      .sort({ _id: -1 })
+      .toArray();
 
     res.status(200).json({
-      comments: sampleComments,
+      comments: documents,
     });
   }
+  client.close();
 };
 
 export default eventIdApi;
