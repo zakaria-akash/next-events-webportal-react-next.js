@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import EventItem from "./event-item";
 
 import classes from "./event-list.module.css";

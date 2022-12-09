@@ -40,14 +40,14 @@ const NewsletterRegistration = () => {
       })
       .then((data) =>
         NotificationCtx.showNotification({
-          title: "Success",
+          title: "Submitted!",
           message: data.message,
           status: "success",
         })
       )
       .catch((err) => {
         NotificationCtx.showNotification({
-          title: "Error",
+          title: "Error!",
           message: "Failed to post data to the server!",
           status: "error",
         });
