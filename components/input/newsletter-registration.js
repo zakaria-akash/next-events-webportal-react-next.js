@@ -1,13 +1,24 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
+
+import NotificationContext from "../../store/notification-context";
 
 import classes from "./newsletter-registration.module.css";
 
 const NewsletterRegistration = () => {
   const emailInputRef = useRef();
+
+  const NotificationCtx = useContext(NotificationContext);
+
   function registrationHandler(event) {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
+
+    NotificationCtx.showNotification({
+      title: "Signing up...",
+      message: "Registration for newsletter update is on process.",
+      status: "pending",
+    });
 
     fetch("/api/newsletter-registration.api", {
       method: "POST",
@@ -18,8 +29,29 @@ const NewsletterRegistration = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data.message));
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.json().then((data) => {
+            throw new Error(data.message);
+          });
+        }
+      })
+      .then((data) =>
+        NotificationCtx.showNotification({
+          title: "Success",
+          message: data.message,
+          status: "success",
+        })
+      )
+      .catch((err) => {
+        NotificationCtx.showNotification({
+          title: "Error",
+          message: "Failed to post data to the server!",
+          status: "error",
+        });
+      });
   }
 
   return (
