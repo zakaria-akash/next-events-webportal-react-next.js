@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import Layout from "../components/layout/layout";
+import Notification from "../components/ui/notification";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
@@ -13,6 +14,11 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <Component {...pageProps} />
+      <Notification
+        title="Test"
+        message="This is Notification bar"
+        status="success"
+      />
     </Layout>
   );
 }
