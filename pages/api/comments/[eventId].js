@@ -1,14 +1,21 @@
 import React from "react";
 
-import { MongoClient } from "mongodb";
+import {
+  connectDatabase,
+  insertDocument,
+  getAllDocsFromDB,
+} from "../../../backend-helpers/db-utils";
 
 const eventIdApi = async (req, res) => {
   const eventId = req.query.eventId;
 
-  const client = await MongoClient.connect(
-    `mongodb+srv://${process.env.USERNAME_PASSWORD}@starting-cluster-01.5mukk.mongodb.net/next-events?retryWrites=true&w=majority`
-  );
-  const db = client.db();
+  let client;
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res.status(500).json({ message: error });
+    return;
+  }
 
   if (req.method === "POST") {
     const { email, name, text } = req.body;
@@ -24,6 +31,7 @@ const eventIdApi = async (req, res) => {
       res.status(422).json({
         message: "Invalid input!",
       });
+      client.close();
       return;
     }
 
@@ -34,27 +42,32 @@ const eventIdApi = async (req, res) => {
       eventId,
     };
 
+    try {
+      const result = await insertDocument(client, "comments", newComment);
+      newComment._id = result.insertedId;
 
-    const result = await db.collection("comments").insertOne(newComment);
-    console.log(result);
-    newComment.id = result.insertedId;
-
-    res.status(201).json({
-      message: "Comment submitted successfully..",
-      comment: newComment,
-    });
+      res.status(201).json({
+        message: "Comment submitted successfully..",
+        comment: newComment,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
   }
   if (req.method === "GET") {
-
-    const documents = await db
-      .collection("comments")
-      .find()
-      .sort({ _id: -1 })
-      .toArray();
-
-    res.status(200).json({
-      comments: documents,
-    });
+    try {
+      const documents = await getAllDocsFromDB(
+        client,
+        "comments",
+        { eventId: eventId },
+        { _id: -1 }
+      );
+      res.status(200).json({
+        comments: documents,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
   }
   client.close();
 };

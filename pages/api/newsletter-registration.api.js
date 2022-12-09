@@ -1,6 +1,9 @@
 import React from "react";
 
-import { MongoClient } from "mongodb";
+import {
+  connectDatabase,
+  insertDocument,
+} from "../../backend-helpers/db-utils";
 
 const newsletterRegistrationApi = async (req, res) => {
   if (req.method === "POST") {
@@ -11,17 +14,22 @@ const newsletterRegistrationApi = async (req, res) => {
       return;
     }
 
-    const client = await MongoClient.connect(
-      `mongodb+srv://${process.env.USERNAME_PASSWORD}@starting-cluster-01.5mukk.mongodb.net/next-events?retryWrites=true&w=majority`
-    );
+    let client;
+    try {
+      client = await connectDatabase();
+    } catch (error) {
+      res.status(500).json({ message: error });
+      return;
+    }
 
-    const db = client.db();
+    try {
+      await insertDocument(client, "email", { email: userEmail });
+      client.close();
+    } catch (error) {
+      res.status(500).json({ message: error });
+      return;
+    }
 
-    await db.collection("email").insertOne({
-      email: userEmail,
-    });
-
-    client.close();
     res.status(201).json({ message: "Signed up successfully." });
   }
 };
