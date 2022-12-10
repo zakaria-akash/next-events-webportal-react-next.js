@@ -1,9 +1,11 @@
-<ins>**Next Events Portal.: A full stack web application for events news.**</ins>
+<ins>**Next Events Portal: A full stack web application for events news**</ins>
 <br />
 A full stack web application development in the React/Next.js platform for exciting events news updates. All great features of Next.js like file-based routing, static generation with pre-rendering, server-side rendering, client-side data fetching, and API Routing have been implemented here as well as Google Firebase and Mongodb have been used to store events and user data respectively.
 <br /><br />
-<ins>Live URL: [next-events-portal.netlify.app](https://next-events-portal.netlify.app/)</ins>
+Live URL: <ins>**[next-events-portal.netlify.app](https://next-events-portal.netlify.app/)**</ins>
 <br /><br />
+<ins>**Some screenshots for desktop and mobile view:**</ins>
+<br />
 #Home page - desktop view:
 <br /><br />
 ![Home Page](screenshots/home-page.png)
