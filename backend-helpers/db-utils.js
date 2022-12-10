@@ -1,8 +1,9 @@
-import { MongoClient } from "mongodb";
+// import { MongoClient } from "mongodb";
+const { MongoClient } = require("mongodb");
 
 export const connectDatabase = async () => {
   const client = await MongoClient.connect(
-    `mongodb+srv://${process.env.USERNAME_PASSWORD}@starting-cluster-01.5mukk.mongodb.net/next-events?retryWrites=true&w=majority`
+    `mongodb+srv://zakaria_akash:25274_akash@starting-cluster-01.5mukk.mongodb.net/next-events?retryWrites=true&w=majority`
   );
 
   return client;

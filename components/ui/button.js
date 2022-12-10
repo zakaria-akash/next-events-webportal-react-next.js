@@ -7,7 +7,7 @@ const Button = (props) => {
   if (props.link) {
     return (
       <Link href={props.link}>
-        <a className={classes.btn}>{props.children}</a>
+        <button className={classes.btn}>{props.children}</button>
       </Link>
     );
   } else {
