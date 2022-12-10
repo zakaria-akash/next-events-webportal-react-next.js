@@ -1,6 +1,8 @@
-This project is a comprehensive approach to implement Next.js for a basic events portal website based on ReactJS library. This is my first React/Next.js project to practice all great features of Next.js in the React eco-system like file/folder base routing, static generation and server-side rendering data from backend, client-side data fetching, API routing for Next.js app and so on.
+<u>**Next Events Portal.: A full stack web application for events news.**</u>
+A full stack web application development in the React/Next.js platform for exciting events news updates. All great features of Next.js like file-based routing, static generation with pre-rendering, server-side rendering, client-side data fetching, and API Routing have been implemented here as well as Google Firebase and Mongodb have been used to store events and user data respectively.
 <br /><br />
-Live URL: [next-events-portal.netlify.app](https://next-events-portal.netlify.app/)
+Live URL: [next-events-portal.netlify.app](https://next-events-portal.netlify.app/)  
+
 <br /><br />
 #Home page - desktop view:
 <br /><br />
